@@ -1,0 +1,35 @@
+{
+  "name": "@janiscommerce/request",
+  "version": "1.0.0",
+  "description": "Simple and ligthweight module to handle external requests",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "export TEST_ENV=true; mocha --exit -R nyan --recursive tests/",
+    "test-ci": "nyc --reporter=html --reporter=text mocha --recursive tests/",
+    "watch-test": "export TEST_ENV=true; mocha --exit -R nyan -w --recursive tests/",
+    "coverage": "nyc npm test",
+    "lint": "eslint lib/ tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janis-commerce/request.git"
+  },
+  "author": "Janis",
+  "license": "ISC",
+  "homepage": "https://github.com/janis-commerce/request.git#readme",
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "mocha": "^8.1.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.0.3"
+  },
+  "files": [
+    "lib/"
+  ],
+  "directories": {
+    "test": "tests"
+  }
+}
