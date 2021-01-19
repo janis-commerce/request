@@ -1,6 +1,6 @@
 # Request Module
 
-[![Build Status](https://travis-ci.org/janis-commerce/request.svg?branch=master)](https://travis-ci.org/janis-commerce/request)
+![Build Status](https://github.com/janis-commerce/request/workflows/Build%20Status/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/janis-commerce/request/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/request?branch=master)
 [![npm version](https://badge.fury.io/js/%40janiscommerce%2Frequest.svg)](https://www.npmjs.com/package/@janiscommerce/request)
 
