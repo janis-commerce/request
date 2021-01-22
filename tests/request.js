@@ -38,7 +38,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = 	await Request[fn](url, payload);
+		const reqResponse = await Request[fn](url, payload);
 
 		sandbox.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
 
