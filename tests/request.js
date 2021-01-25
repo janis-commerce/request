@@ -14,7 +14,7 @@ describe('Request Test', () => {
 		const passThrough = new PassThrough();
 		passThrough.headers = headers;
 		passThrough.statusCode = code;
-		passThrough.write(JSON.stringify(body));
+		passThrough.write(!Buffer.isBuffer(body) ? JSON.stringify(body) : body);
 		passThrough.end();
 		return passThrough;
 	};
@@ -68,7 +68,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = 	await Request[fn](url);
+		const reqResponse = await Request[fn](url);
 
 		sandbox.assert.calledWithExactly(writeSpy, '');
 
@@ -144,7 +144,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = 	await Request.get(url);
+		const reqResponse = await Request.get(url);
 
 		sandbox.assert.calledWithExactly(writeSpy, '');
 
@@ -177,7 +177,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = 	await Request.get(url, { path, queryParams });
+		const reqResponse = await Request.get(url, { path, queryParams });
 
 		sandbox.assert.calledWithExactly(writeSpy, '');
 
@@ -234,8 +234,7 @@ describe('Request Test', () => {
 
 		const response = {
 			code: 200,
-			body: '<h1>test</h1>',
-			rawBody: Buffer.from('"<h1>test</h1>"', 'utf-8'),
+			body: Buffer.from('<h1>test</h1>'),
 			headers: { 'content-type': 'text/html' }
 		};
 
@@ -248,7 +247,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(reqPassThrough);
 
-		const reqResponse = 	await Request.post(url, payload);
+		const reqResponse = await Request.post(url, payload);
 
 		sandbox.assert.calledOnceWithExactly(writeSpy, payload);
 
@@ -260,8 +259,8 @@ describe('Request Test', () => {
 		});
 
 		assert.deepStrictEqual(reqResponse.statusCode, response.code);
+		assert.deepStrictEqual(reqResponse.rawBody, response.body);
 		assert.deepStrictEqual(reqResponse.body, response.body);
-		assert.deepStrictEqual(reqResponse.rawBody, response.rawBody);
 
 	});
 
@@ -280,7 +279,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = 	await Request.call({ endpoint: url });
+		const reqResponse = await Request.call({ endpoint: url });
 
 		sandbox.assert.calledWithExactly(writeSpy, '');
 
