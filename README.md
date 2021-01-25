@@ -9,6 +9,24 @@
 const Request = require('@janiscommerce/request');
 ```
 
+### Get Request Example
+```js
+const { body } = await Request.get('https://reqres.in/api/users')
+console.log(body)
+```
+
+### Post Request Example
+```js
+const { body: { id } } = await Request.post(
+    'https://reqres.in/api/users',
+    {
+        name: 'morpheus',
+        job: 'leader'
+    }
+)
+console.log(id)
+```
+
 ---
 
 ## ⚙️ Classes

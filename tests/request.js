@@ -1,7 +1,7 @@
 'use strict';
 
 const { PassThrough } = require('stream');
-const sandbox = require('sinon').createSandbox();
+const sandbox = require('sinon');
 const assert = require('assert');
 
 const { http, https } = require('../lib/wrappers');
@@ -97,7 +97,38 @@ describe('Request Test', () => {
 
 	it('Should make a simple delete', async () => testWithoutPayload('delete'));
 
-	it('Should make a get in strict mode and throw an error', async () => {
+	it('Should throw an error if response without content type header when strict mode is enabled', async () => {
+
+		const url = 'http://test.com';
+
+		const response = {
+			code: 200,
+			body: '<h1>test</h1>',
+			headers: {}
+		};
+
+		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+
+		sandbox.stub(http, 'request')
+			.callsArgWith(1, mockResponse(response))
+			.returns(new PassThrough());
+
+		await assert.rejects(Request.get(url, { strictMode: true }), {
+			code: RequestError.REQUEST_ERROR
+		});
+
+		sandbox.assert.calledWithExactly(writeSpy, '');
+
+		sandbox.assert.calledWithMatch(http.request, {
+			host: 'test.com',
+			method: 'GET',
+			path: '/',
+			headers: Request.defaultHeaders
+		});
+
+	});
+
+	it('Should throw an error if response is not application/json when strict mode is enabled', async () => {
 
 		const url = 'http://test.com';
 
@@ -144,7 +175,7 @@ describe('Request Test', () => {
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
-		const reqResponse = await Request.get(url);
+		const reqResponse = await Request.get(url, { strictMode: true });
 
 		sandbox.assert.calledWithExactly(writeSpy, '');
 
