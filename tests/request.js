@@ -1,7 +1,7 @@
 'use strict';
 
 const { PassThrough } = require('stream');
-const sandbox = require('sinon');
+const sinon = require('sinon');
 const assert = require('assert');
 
 const { http, https } = require('../lib/wrappers');
@@ -32,17 +32,17 @@ describe('Request Test', () => {
 			test: 'test'
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
 		const reqResponse = await Request[fn](url, payload);
 
-		sandbox.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
+		sinon.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: url,
 			method: fn.toUpperCase(),
 			path: '/',
@@ -62,17 +62,17 @@ describe('Request Test', () => {
 			headers: { 'Content-Type': 'application/json' }
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
 		const reqResponse = await Request[fn](url);
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: url,
 			method: fn.toUpperCase(),
 			path: '/',
@@ -84,7 +84,7 @@ describe('Request Test', () => {
 	};
 
 	afterEach(() => {
-		sandbox.restore();
+		sinon.restore();
 	});
 
 	it('Should make a simple get', async () => testWithoutPayload('get'));
@@ -107,9 +107,9 @@ describe('Request Test', () => {
 			headers: {}
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
@@ -117,9 +117,9 @@ describe('Request Test', () => {
 			code: RequestError.REQUEST_ERROR
 		});
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: 'test.com',
 			method: 'GET',
 			path: '/',
@@ -138,9 +138,9 @@ describe('Request Test', () => {
 			headers: { 'Content-Type': 'text/html' }
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
@@ -148,9 +148,9 @@ describe('Request Test', () => {
 			code: RequestError.REQUEST_ERROR
 		});
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: 'test.com',
 			method: 'GET',
 			path: '/',
@@ -169,17 +169,17 @@ describe('Request Test', () => {
 			headers: { 'Content-Type': 'application/json' }
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
 		const reqResponse = await Request.get(url, { strictMode: true });
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: 'test.com',
 			method: 'GET',
 			path: '/',
@@ -202,17 +202,17 @@ describe('Request Test', () => {
 			headers: { 'Content-Type': 'application/json' }
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(https, 'request')
+		sinon.stub(https, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
 		const reqResponse = await Request.get(url, { path, queryParams });
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(https.request, {
+		sinon.assert.calledWithMatch(https.request, {
 			host: 'test.com',
 			method: 'GET',
 			path: '/hello?pag=2',
@@ -237,17 +237,17 @@ describe('Request Test', () => {
 		};
 
 		const reqPassThrough = new PassThrough();
-		const writeSpy = sandbox.spy(reqPassThrough, 'write');
+		const writeSpy = sinon.spy(reqPassThrough, 'write');
 
-		sandbox.stub(https, 'request')
+		sinon.stub(https, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(reqPassThrough);
 
 		const reqResponse = await Request.post(url, payload, { pathParams });
 
-		sandbox.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
+		sinon.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
 
-		sandbox.assert.calledWithMatch(https.request, {
+		sinon.assert.calledWithMatch(https.request, {
 			host: 'test.com',
 			method: 'POST',
 			path: '/id/2/refid/3',
@@ -272,17 +272,17 @@ describe('Request Test', () => {
 		const payload = Buffer.from('<form>test</form>', 'utf-8');
 
 		const reqPassThrough = new PassThrough();
-		const writeSpy = sandbox.spy(reqPassThrough, 'write');
+		const writeSpy = sinon.spy(reqPassThrough, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(reqPassThrough);
 
 		const reqResponse = await Request.post(url, payload);
 
-		sandbox.assert.calledOnceWithExactly(writeSpy, payload);
+		sinon.assert.calledOnceWithExactly(writeSpy, payload);
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: 'test.com',
 			method: 'POST',
 			path: '/',
@@ -304,17 +304,17 @@ describe('Request Test', () => {
 			headers: { 'Content-Type': 'application/json' }
 		};
 
-		const writeSpy = sandbox.spy(PassThrough.prototype, 'write');
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
 
-		sandbox.stub(http, 'request')
+		sinon.stub(http, 'request')
 			.callsArgWith(1, mockResponse(response))
 			.returns(new PassThrough());
 
 		const reqResponse = await Request.call({ endpoint: url });
 
-		sandbox.assert.calledWithExactly(writeSpy, '');
+		sinon.assert.calledWithExactly(writeSpy, '');
 
-		sandbox.assert.calledWithMatch(http.request, {
+		sinon.assert.calledWithMatch(http.request, {
 			host: url,
 			method: 'GET',
 			path: '/',
