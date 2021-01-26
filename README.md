@@ -11,8 +11,9 @@ const Request = require('@janiscommerce/request');
 
 ### Get Request Example
 ```js
-const { body } = await Request.get('https://reqres.in/api/users')
-console.log(body)
+const { statusCode, body } = await Request.get('https://reqres.in/api/users');
+console.log(`Status code: ${statusCode}`);
+console.log(body);
 ```
 
 ### Post Request Example
@@ -23,8 +24,8 @@ const { body: { id } } = await Request.post(
         name: 'morpheus',
         job: 'leader'
     }
-)
-console.log(id)
+);
+console.log(id);
 ```
 
 ---
