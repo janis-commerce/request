@@ -4,9 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/janis-commerce/request/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/request?branch=master)
 [![npm version](https://badge.fury.io/js/%40janiscommerce%2Frequest.svg)](https://www.npmjs.com/package/@janiscommerce/request)
 
-
-
-
 ## 📦 Installation
 ```js
 const { Request } = require('@janiscommerce/request');
@@ -15,7 +12,6 @@ const { Request } = require('@janiscommerce/request');
 | :warning: Migration :warning: |
 | :--: |
 | If you are using v1.x see the [migration guide](#Migration) |
-
 
 ## :hammer: Usage
 
