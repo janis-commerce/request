@@ -323,6 +323,7 @@ A string path. Supports templating in "{variable}" format. IE: "/api/users/{user
 | rawBody | <code>Array</code> | Response body without serialization. |
 | originRequest | [<code>CallOptions</code>](#CallOptions) | Used to make another request based on the origin request. Ie: For retry the same request |
 
+---
 ## :running: Migration
 ### Migration from v1.x to v2
 
