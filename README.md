@@ -11,7 +11,7 @@ const { Request } = require('@janiscommerce/request');
 
 | :warning: Migration :warning: |
 | :--: |
-| If you are using v1.x see the [migration guide](#Migration) |
+| If you are using v1.x see the [migration guide](#running-migration) |
 
 ## :hammer: Usage
 
