@@ -16,9 +16,9 @@ const { Request } = require('@janiscommerce/request');
 ## :hammer: Usage
 
 ### Request example
-Making a custom request. When the response status code is greater than or equal to 400 throws an error.
+Making a custom request.
 
-If you want to handle the error safely you can use `RequestSafe`
+> :warning:  When the response **status code is greater than or equal to 400 throws an error.**
 
 ```js
 
@@ -45,6 +45,8 @@ try {
 
 ### RequestSafe example
 Making a custom safe request
+
+> :warning:  If you want to handle the error safely. **NOT THROW**
 
 ```js
 const { RequestSafe } = require('@janiscommerce/request');
@@ -104,80 +106,6 @@ Simple static class to make external request using http and http node core packa
     * [.patch(endpoint, body, [options])](#Request.patch) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.delete(endpoint, [options])](#Request.delete) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.call(options)](#Request.call) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-
-<a name="Request.defaultHeaders"></a>
-
-### Request.defaultHeaders
-<details>
-    <summary>To get default request headers</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.httpMethod
-<details>
-    <summary>To get request http method</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.endpoint
-<details>
-    <summary>To get request endpoint</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.headers
-<details>
-    <summary>To get request headers</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.body
-<details>
-    <summary>To get request body if exist</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.statusCode
-<details>
-    <summary>To get response status code</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.responseBody
-<details>
-    <summary>To get response body</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
-
-### Request.responseHeaders
-<details>
-    <summary>To get response headers</summary>
-
-**Kind**: static property of [<code>Request</code>](#Request)
-**Read only**: true
-<a name="Request.get"></a>
-</details>
 
 ### Request.get(endpoint, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
 <details>
