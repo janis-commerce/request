@@ -254,3 +254,10 @@ A string path. Supports templating in "{variable}" format. IE: "/api/users/{user
 Now `Request`, in addition to being required in another way, throws an error if the response status code if >= 400
 
 If you want to keep the functionality of v1.x must require and change `RequestSafe` to your old `Request` as follows
+```js
+// old way to require the package
+const Request = require('@janiscommerce/request');
+
+// new way
+const { Request } = require('@janiscommerce/request');
+```
