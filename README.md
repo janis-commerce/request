@@ -259,5 +259,5 @@ If you want to keep the functionality of v1.x must require and change `RequestSa
 const Request = require('@janiscommerce/request');
 
 // new way
-const { Request } = require('@janiscommerce/request');
+const { RequestSafe } = require('@janiscommerce/request');
 ```
