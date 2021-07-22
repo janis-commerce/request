@@ -93,19 +93,43 @@ Simple static class to make external request using http and http node core packa
 
 * [Request](#Request)
     * [.defaultHeaders](#Request.defaultHeaders)
-    * [.httpMethod](#Request.defaultHeaders)
+    * [.httpMethod](#Request.httpMethod)
     * [.endpoint](#Request.endpoint)
     * [.headers](#Request.headers)
     * [.body](#Request.body)
     * [.statusCode](#Request.statusCode)
     * [.responseBody](#Request.responseBody)
     * [.responseHeaders](#Request.responseHeaders)
+
+    * [.lastRequest](#Request.lastRequest)
+    * [.lastResponse](#Request.lastResponse)
+
     * [.get(endpoint, [options])](#Request.get) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.post(endpoint, body, [options])](#Request.post) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.put(endpoint, body, [options])](#Request.put) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.patch(endpoint, body, [options])](#Request.patch) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.delete(endpoint, [options])](#Request.delete) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.call(options)](#Request.call) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
+
+### Request.lastRequest
+<details>
+    <summary>To get the last request http method, endpoint, headers and body</summary>
+
+**Kind**: static property of [<code>Request</code>](#Request)
+
+**Read only**: true
+<a name="Request.lastRequest"></a>
+</details>
+
+### Request.lastResponse
+<details>
+    <summary>To get the last response status code, headers and body</summary>
+
+**Kind**: static property of [<code>Request</code>](#Request)
+
+**Read only**: true
+<a name="Request.lastResponse"></a>
+</details>
 
 ### Request.get(endpoint, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
 <details>

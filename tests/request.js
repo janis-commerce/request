@@ -61,6 +61,25 @@ describe('Request Test', () => {
 		assert.deepStrictEqual(Request.statusCode, response.code);
 		assert.deepStrictEqual(Request.responseHeaders, response.headers);
 		assert.deepStrictEqual(Request.responseBody, response.body);
+
+		assert.deepStrictEqual(Request.lastRequest, {
+			body: {
+				test: 'test'
+			},
+			endpoint: 'test.com',
+			headers: undefined,
+			httpMethod: fn.toUpperCase()
+		});
+
+		assert.deepStrictEqual(Request.lastResponse, {
+			body: {
+				message: 'ok'
+			},
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			statusCode: 200
+		});
 	};
 
 	const testWithoutPayload = async (fn, res) => {
