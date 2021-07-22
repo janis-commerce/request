@@ -4,28 +4,57 @@
 [![Coverage Status](https://coveralls.io/repos/github/janis-commerce/request/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/request?branch=master)
 [![npm version](https://badge.fury.io/js/%40janiscommerce%2Frequest.svg)](https://www.npmjs.com/package/@janiscommerce/request)
 
-## 📦 Require
+## 📦 Installation
 ```js
-const Request = require('@janiscommerce/request');
+const { Request } = require('@janiscommerce/request');
 ```
 
-### Get Request Example
+| :warning: Migration :warning: |
+| :--: |
+| If you are using v1.x see the [migration guide](#running-migration) |
+
+## :hammer: Usage
+
+### Request example
+Making a custom request.
+
+> :warning:  When the response **status code is greater than or equal to 400 throws an error.**
+
 ```js
-const { statusCode, body } = await Request.get('https://reqres.in/api/users');
-console.log(`Status code: ${statusCode}`);
-console.log(body);
+
+try {
+
+    const { statusCode, body } = await Request.get('https://reqres.in/api/users');
+
+    console.log(`Status code: ${statusCode}`); // Status code: 200
+    console.log(body); // { message: 'OK' }
+
+} catch(error){
+
+    console.log(error)
+
+    /*
+		{
+			name: 'RequestError'
+			message: 'Request failed: internal error',
+			code: 1
+		}
+    */
+}
 ```
 
-### Post Request Example
+### RequestSafe example
+Making a custom safe request
+
+> :warning:  If you want to handle the error safely. **NOT THROW**
+
 ```js
-const { body: { id } } = await Request.post(
-    'https://reqres.in/api/users',
-    {
-        name: 'morpheus',
-        job: 'leader'
-    }
-);
-console.log(id);
+const { RequestSafe } = require('@janiscommerce/request');
+
+const { statusCode, body } = await RequestSafe.get('https://reqres.in/api/users');
+
+console.log(`Status code: ${statusCode}`); // Status code: 500
+console.log(body); // { message: 'internal error' }
 ```
 
 ---
@@ -35,6 +64,9 @@ console.log(id);
 <dl>
 <dt><a href="#Request">Request</a></dt>
 <dd><p>Simple static class to make external request using http and http node core packages</p>
+</dd>
+<dt><a href="#RequestSafe">RequestSafe</a></dt>
+<dd><p>Extend from <a href="#Request">Request</a>. Its use is the same but not throw an error when the response status code is greater than or equal to 400</p>
 </dd>
 </dl>
 
@@ -61,6 +93,17 @@ Simple static class to make external request using http and http node core packa
 
 * [Request](#Request)
     * [.defaultHeaders](#Request.defaultHeaders)
+    * [.httpMethod](#Request.httpMethod)
+    * [.endpoint](#Request.endpoint)
+    * [.headers](#Request.headers)
+    * [.body](#Request.body)
+    * [.statusCode](#Request.statusCode)
+    * [.responseBody](#Request.responseBody)
+    * [.responseHeaders](#Request.responseHeaders)
+
+    * [.lastRequest](#Request.lastRequest)
+    * [.lastResponse](#Request.lastResponse)
+
     * [.get(endpoint, [options])](#Request.get) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.post(endpoint, body, [options])](#Request.post) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.put(endpoint, body, [options])](#Request.put) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
@@ -68,17 +111,29 @@ Simple static class to make external request using http and http node core packa
     * [.delete(endpoint, [options])](#Request.delete) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
     * [.call(options)](#Request.call) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
 
-<a name="Request.defaultHeaders"></a>
-
-### Request.defaultHeaders
-To get default request headers
+### Request.lastRequest
+<details>
+    <summary>To get the last request http method, endpoint, headers and body</summary>
 
 **Kind**: static property of [<code>Request</code>](#Request)
+
 **Read only**: true
-<a name="Request.get"></a>
+<a name="Request.lastRequest"></a>
+</details>
+
+### Request.lastResponse
+<details>
+    <summary>To get the last response status code, headers and body</summary>
+
+**Kind**: static property of [<code>Request</code>](#Request)
+
+**Read only**: true
+<a name="Request.lastResponse"></a>
+</details>
 
 ### Request.get(endpoint, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a GET request
+<details>
+    <summary>To make a GET request</summary>
 
 **Kind**: static method of [<code>Request</code>](#Request)
 
@@ -88,9 +143,26 @@ To make a GET request
 | [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
 
 <a name="Request.post"></a>
+</details>
 
 ### Request.post(endpoint, body, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a POST request
+<details>
+    <summary>To make a POST request</summary>
+
+**Kind**: static method of [<code>Request</code>](#Request)
+
+| Param | Type | Default |
+| --- | --- | --- |
+| endpoint | <code>string</code> |  |
+| body | <code>any</code> |  |
+| [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
+
+<a name="Request.post"></a>
+</details>
+
+### Request.put(endpoint, body, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
+<details>
+    <summary>To make a PUT request</summary>
 
 **Kind**: static method of [<code>Request</code>](#Request)
 
@@ -101,9 +173,11 @@ To make a POST request
 | [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
 
 <a name="Request.put"></a>
+</details>
 
-### Request.put(endpoint, body, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a PUT request
+### Request.patch(endpoint, body, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
+<details>
+    <summary>To make a PATCH request</summary>
 
 **Kind**: static method of [<code>Request</code>](#Request)
 
@@ -114,34 +188,25 @@ To make a PUT request
 | [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
 
 <a name="Request.patch"></a>
+</details>
 
-### Request.patch(endpoint, body, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a PATCH request
+### Request.delete(endpoint, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
+<details>
+    <summary>To make a DELETE request</summary>
 
 **Kind**: static method of [<code>Request</code>](#Request)
 
 | Param | Type | Default |
 | --- | --- | --- |
 | endpoint | <code>string</code> |  |
-| body | <code>any</code> |  |
 | [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
 
 <a name="Request.delete"></a>
-
-### Request.delete(endpoint, [options]) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a DELETE request
-
-**Kind**: static method of [<code>Request</code>](#Request)
-
-| Param | Type | Default |
-| --- | --- | --- |
-| endpoint | <code>string</code> |  |
-| [options] | [<code>RequestOptions</code>](#RequestOptions) | <code>{}</code> |
-
-<a name="Request.call"></a>
+</details>
 
 ### Request.call(options) ⇒ [<code>Promise.&lt;RequestResponse&gt;</code>](#RequestResponse)
-To make a custom request
+<details>
+    <summary>To make a custom request</summary>
 
 **Kind**: static method of [<code>Request</code>](#Request)
 
@@ -149,7 +214,8 @@ To make a custom request
 | --- | --- |
 | options | [<code>CallOptions</code>](#CallOptions) |
 
-<a name="PathTemplate"></a>
+<a name="Request.call"></a>
+</details>
 
 ## PathTemplate : <code>string</code>
 A string path. Supports templating in "{variable}" format. IE: "/api/users/{userId}/contacts"
@@ -205,3 +271,17 @@ A string path. Supports templating in "{variable}" format. IE: "/api/users/{user
 | rawBody | <code>Array</code> | Response body without serialization. |
 | originRequest | [<code>CallOptions</code>](#CallOptions) | Used to make another request based on the origin request. Ie: For retry the same request |
 
+---
+## :running: Migration
+### Migration from v1.x to v2
+
+Now `Request`, in addition to being required in another way, throws an error if the response status code if >= 400
+
+If you want to keep the functionality of v1.x must require and change `RequestSafe` to your old `Request` as follows
+```js
+// old way to require the package
+const Request = require('@janiscommerce/request');
+
+// new way
+const { RequestSafe } = require('@janiscommerce/request');
+```
