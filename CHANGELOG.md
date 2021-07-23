@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.0.0] - 2021-07-23
 ### Changed
-- Now the package export `Request` and `RequestSafe`. See the [migration guide](./README.md#running-migration)
-- Update `Request` with new getter methods
+- Now the package export `Request` and `RequestSafe`. See the [migration guide](./README.md#running-migration) **BREAKING CHANGE**
+- Update `Request` with new getter methods to obtain last request and response data
 
 ### Added
 - Types definitions
