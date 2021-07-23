@@ -1,6 +1,6 @@
 {
   "name": "@janiscommerce/request",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Simple and ligthweight module to handle external requests",
   "main": "lib/index.js",
   "scripts": {
