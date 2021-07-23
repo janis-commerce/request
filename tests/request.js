@@ -5,7 +5,7 @@ const sinon = require('sinon');
 const assert = require('assert');
 
 const { http, https } = require('../lib/wrappers');
-const Request = require('../lib/request');
+const { Request } = require('../lib');
 const RequestError = require('../lib/request-error');
 
 describe('Request Test', () => {
@@ -20,6 +20,7 @@ describe('Request Test', () => {
 	};
 
 	const testWithPayload = async (fn, res) => {
+
 		const url = 'test.com';
 
 		const response = res || {
@@ -46,11 +47,39 @@ describe('Request Test', () => {
 			host: url,
 			method: fn.toUpperCase(),
 			path: '/',
-			headers: Request.defaultHeaders
+			headers: { ...Request.defaultHeaders }
 		});
 
 		assert.deepStrictEqual(reqResponse.statusCode, response.code);
 		assert.deepStrictEqual(reqResponse.body, response.body);
+
+		assert.deepStrictEqual(Request.httpMethod, fn.toUpperCase());
+		assert.deepStrictEqual(Request.endpoint, url);
+		assert.deepStrictEqual(Request.headers, undefined);
+		assert.deepStrictEqual(Request.body, payload);
+
+		assert.deepStrictEqual(Request.statusCode, response.code);
+		assert.deepStrictEqual(Request.responseHeaders, response.headers);
+		assert.deepStrictEqual(Request.responseBody, response.body);
+
+		assert.deepStrictEqual(Request.lastRequest, {
+			body: {
+				test: 'test'
+			},
+			endpoint: 'test.com',
+			headers: undefined,
+			httpMethod: fn.toUpperCase()
+		});
+
+		assert.deepStrictEqual(Request.lastResponse, {
+			body: {
+				message: 'ok'
+			},
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			statusCode: 200
+		});
 	};
 
 	const testWithoutPayload = async (fn, res) => {
@@ -289,10 +318,9 @@ describe('Request Test', () => {
 			headers: Request.defaultHeaders
 		});
 
-		assert.deepStrictEqual(reqResponse.statusCode, response.code);
+		assert.deepStrictEqual(Request.statusCode, response.code);
+		assert.deepStrictEqual(Request.responseBody, response.body);
 		assert.deepStrictEqual(reqResponse.rawBody, response.body);
-		assert.deepStrictEqual(reqResponse.body, response.body);
-
 	});
 
 	it('Should make a get request by default', async () => {
@@ -325,4 +353,34 @@ describe('Request Test', () => {
 		assert.deepStrictEqual(reqResponse.body, response.body);
 	});
 
+	it('Should throw an error when the request return a statusCode greather than or equal to 400', async () => {
+
+		const url = 'http://test.com';
+
+		const response = {
+			code: 500,
+			body: 'internal error',
+			headers: { 'Content-Type': 'application/json' }
+		};
+
+		const writeSpy = sinon.spy(PassThrough.prototype, 'write');
+
+		sinon.stub(http, 'request')
+			.callsArgWith(1, mockResponse(response))
+			.returns(new PassThrough());
+
+		await assert.rejects(Request.get(url), {
+			code: RequestError.codes.REQUEST_ERROR,
+			message: 'Request failed: internal error'
+		});
+
+		sinon.assert.calledWithExactly(writeSpy, '');
+
+		sinon.assert.calledWithMatch(http.request, {
+			host: 'test.com',
+			method: 'GET',
+			path: '/',
+			headers: Request.defaultHeaders
+		});
+	});
 });
