@@ -62,3 +62,6 @@ typings/
 
 # vscode config files
 .vscode/
+
+# Built types definitions
+types/
