@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1] - 2021-08-23
+### Fixed
+- Now response body is parsed to string when the response is not valid JSON
+
 ## [2.0.0] - 2021-07-23
 ### Changed
 - Now the package export `Request` and `RequestSafe`. See the [migration guide](./README.md#running-migration) **BREAKING CHANGE**
