@@ -292,13 +292,15 @@ describe('Request Test', () => {
 
 		const url = 'http://test.com';
 
+		const bodyContent = '<h1>test</h1>';
+
 		const response = {
 			code: 200,
-			body: Buffer.from('<h1>test</h1>'),
+			body: Buffer.from(bodyContent),
 			headers: { 'content-type': 'text/html' }
 		};
 
-		const payload = Buffer.from('<form>test</form>', 'utf-8');
+		const payload = Buffer.from(bodyContent, 'utf-8');
 
 		const reqPassThrough = new PassThrough();
 		const writeSpy = sinon.spy(reqPassThrough, 'write');
@@ -319,8 +321,8 @@ describe('Request Test', () => {
 		});
 
 		assert.deepStrictEqual(Request.statusCode, response.code);
-		assert.deepStrictEqual(Request.responseBody, response.body);
-		assert.deepStrictEqual(reqResponse.rawBody, response.body);
+		assert.deepStrictEqual(Request.responseBody, bodyContent);
+		assert.deepStrictEqual(reqResponse.rawBody, payload);
 	});
 
 	it('Should make a get request by default', async () => {
