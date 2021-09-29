@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.2] - 2021-08-29
+### Fixed
+- Now endpoints with explicit port are properly parsed
+- Request failed exception now shows the response rawbody instead of [object Object]
+
 ## [2.0.1] - 2021-08-23
 ### Fixed
 - Now response body is parsed to string when the response is not valid JSON
