@@ -44,7 +44,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: url,
+			hostname: url,
 			method: fn.toUpperCase(),
 			path: '/',
 			headers: { ...Request.defaultHeaders }
@@ -102,7 +102,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: url,
+			hostname: url,
 			method: fn.toUpperCase(),
 			path: '/',
 			headers: Request.defaultHeaders
@@ -149,7 +149,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'GET',
 			path: '/',
 			headers: Request.defaultHeaders
@@ -180,7 +180,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'GET',
 			path: '/',
 			headers: Request.defaultHeaders
@@ -209,7 +209,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'GET',
 			path: '/',
 			headers: Request.defaultHeaders
@@ -242,7 +242,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(https.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'GET',
 			path: '/hello?pag=2',
 			headers: Request.defaultHeaders
@@ -277,7 +277,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, JSON.stringify(payload));
 
 		sinon.assert.calledWithMatch(https.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'POST',
 			path: '/id/2/refid/3',
 			headers: Request.defaultHeaders
@@ -314,7 +314,7 @@ describe('Request Test', () => {
 		sinon.assert.calledOnceWithExactly(writeSpy, payload);
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'POST',
 			path: '/',
 			headers: Request.defaultHeaders
@@ -345,7 +345,7 @@ describe('Request Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: url,
+			hostname: url,
 			method: 'GET',
 			path: '/',
 			headers: Request.defaultHeaders
@@ -373,13 +373,13 @@ describe('Request Test', () => {
 
 		await assert.rejects(Request.get(url), {
 			code: RequestError.codes.REQUEST_ERROR,
-			message: 'Request failed: internal error'
+			message: 'Request failed: "internal error"'
 		});
 
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: 'test.com',
+			hostname: 'test.com',
 			method: 'GET',
 			path: '/',
 			headers: Request.defaultHeaders

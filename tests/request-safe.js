@@ -32,7 +32,7 @@ describe('Request Safe Test', () => {
 		sinon.assert.calledWithExactly(writeSpy, '');
 
 		sinon.assert.calledWithMatch(http.request, {
-			host: url,
+			hostname: url,
 			method: fn.toUpperCase(),
 			path: '/',
 			headers: RequestSafe.defaultHeaders
