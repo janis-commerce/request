@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const RequestError = require('../lib/request-error.js');
+const RequestError = require('../lib/request-error');
 
 describe('Request Error Test', () => {
 
