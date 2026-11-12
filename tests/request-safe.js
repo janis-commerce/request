@@ -52,7 +52,6 @@ describe('Request Safe Test', () => {
 		headers: { 'Content-Type': 'application/json' }
 	}));
 
-
 	it('Should make a simple get and returns a success request', async () => testCase('get', {
 		code: 200,
 		body: { message: 'success request' },
